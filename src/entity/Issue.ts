@@ -3,9 +3,9 @@ import { BaseEntity } from './BaseEntity';
 import { NotAcceptableException } from '@nestjs/common';
 
 export enum IssueState {
-  OPEN = 'open',
-  PENDING = 'pending',
-  CLOSED = 'closed',
+  OPEN = 'OPEN',
+  PENDING = 'PENDING',
+  CLOSED = 'CLOSED',
 }
 
 @Entity({ name: 'issue' })
@@ -27,7 +27,7 @@ export class Issue extends BaseEntity {
     this.state = state;
   }
 
-  changeToOpen(): void {
+  public changeToOpen(): void {
     if (this.state === IssueState.PENDING || this.state === IssueState.CLOSED) {
       throw new NotAcceptableException('Cannot change issue state to open');
     }
@@ -35,7 +35,7 @@ export class Issue extends BaseEntity {
     this.state = IssueState.OPEN;
   }
 
-  changeToPending(): void {
+  public changeToPending(): void {
     if (this.state === IssueState.CLOSED) {
       throw new NotAcceptableException('Cannot change issue state to pending');
     }
@@ -43,11 +43,19 @@ export class Issue extends BaseEntity {
     this.state = IssueState.PENDING;
   }
 
-  changeToClosed(): void {
+  public changeToClosed(): void {
     this.state = IssueState.CLOSED;
   }
 
-  getState(): IssueState {
+  public getTitle(): string {
+    return this.title;
+  }
+
+  public getDescription(): string {
+    return this.description;
+  }
+
+  public getState(): IssueState {
     return this.state;
   }
 }

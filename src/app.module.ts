@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controller/app.controller';
-import { AppService } from './service/app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Issue } from './entity/Issue';
+import { IssueRepository } from './repository/issue.repository';
+import { IssueService } from './service/issue.service';
+import { IssueController } from './controller/issue.controller';
 
 @Module({
   imports: [
@@ -19,10 +21,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
       logging: true,
-      entities: [],
+      entities: [Issue],
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [IssueController],
+  providers: [
+    // repository
+    IssueRepository,
+
+    // service
+    IssueService,
+  ],
 })
 export class AppModule {}

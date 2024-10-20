@@ -8,9 +8,17 @@ export class IssueRepository extends Repository<Issue> {
     super(Issue, dataSource.createEntityManager());
   }
 
-  public async deleteById(issueId: string): Promise<void> {
+  public async findById(id: string): Promise<Issue> {
+    return await this.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
+  public async deleteById(id: string): Promise<void> {
     await this.delete({
-      id: issueId,
+      id,
     });
   }
 }

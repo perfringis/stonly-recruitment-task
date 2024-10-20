@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateIssueDTO } from 'src/dto/create.issue.dto';
-import { Issue } from 'src/entity/Issue';
+import { Issue, IssueState } from 'src/entity/Issue';
 import { IssueRepository } from 'src/repository/issue.repository';
 
 @Injectable()
@@ -13,6 +13,14 @@ export class IssueService {
       issueDTO.description,
       issueDTO.state,
     );
+
+    return await this.issueRepository.save(issue);
+  }
+
+  public async updateIssue(issueId: string, state: IssueState): Promise<Issue> {
+    const issue: Issue = await this.issueRepository.findById(issueId);
+
+    issue.changeTo(state);
 
     return await this.issueRepository.save(issue);
   }

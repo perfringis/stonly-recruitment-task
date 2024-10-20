@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
   Res,
   UsePipes,
   ValidationPipe,
@@ -12,6 +13,7 @@ import {
 import { Response } from 'express';
 import { CreateIssueDTO } from 'src/dto/create.issue.dto';
 import { IssueDTO } from 'src/dto/issue.dto';
+import { UpdateIssueDTO } from 'src/dto/update.issue.dto';
 import { Issue } from 'src/entity/Issue';
 import { IssueService } from 'src/service/issue.service';
 
@@ -25,6 +27,18 @@ export class IssueController {
     @Body() createIssueDTO: CreateIssueDTO,
   ): Promise<IssueDTO> {
     const issue: Issue = await this.issueService.create(createIssueDTO);
+
+    return this.toDto(issue);
+  }
+
+  @Put('issue')
+  public async update(
+    @Body() updateIssueDTO: UpdateIssueDTO,
+  ): Promise<IssueDTO> {
+    const issue: Issue = await this.issueService.updateIssue(
+      updateIssueDTO.id,
+      updateIssueDTO.state,
+    );
 
     return this.toDto(issue);
   }

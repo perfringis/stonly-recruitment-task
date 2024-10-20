@@ -17,7 +17,7 @@ export class Issue extends BaseEntity {
   private description: string;
 
   @Column({ name: 'state', type: 'enum', enum: IssueState })
-  private state: IssueState;
+  public state: IssueState;
 
   constructor(title: string, description: string, state: IssueState) {
     super();
@@ -45,6 +45,16 @@ export class Issue extends BaseEntity {
 
   public changeToClosed(): void {
     this.state = IssueState.CLOSED;
+  }
+
+  public changeTo(state: IssueState): void {
+    if (state === IssueState.OPEN) {
+      this.changeToOpen();
+    } else if (state === IssueState.PENDING) {
+      this.changeToPending();
+    } else if (state === IssueState.CLOSED) {
+      this.changeToClosed();
+    }
   }
 
   public getTitle(): string {

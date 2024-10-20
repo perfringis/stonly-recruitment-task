@@ -7,4 +7,10 @@ export class IssueRepository extends Repository<Issue> {
   constructor(private readonly dataSource: DataSource) {
     super(Issue, dataSource.createEntityManager());
   }
+
+  public async deleteById(issueId: string): Promise<void> {
+    await this.delete({
+      id: issueId,
+    });
+  }
 }

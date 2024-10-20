@@ -1,10 +1,15 @@
 import {
   Body,
   Controller,
+  Delete,
+  HttpStatus,
+  Param,
   Post,
+  Res,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { CreateIssueDTO } from 'src/dto/create.issue.dto';
 import { IssueDTO } from 'src/dto/issue.dto';
 import { Issue } from 'src/entity/Issue';
@@ -14,7 +19,7 @@ import { IssueService } from 'src/service/issue.service';
 export class IssueController {
   constructor(private readonly issueService: IssueService) {}
 
-  @Post('issue/create')
+  @Post('issue')
   @UsePipes(ValidationPipe)
   public async create(
     @Body() createIssueDTO: CreateIssueDTO,
@@ -22,6 +27,16 @@ export class IssueController {
     const issue: Issue = await this.issueService.create(createIssueDTO);
 
     return this.toDto(issue);
+  }
+
+  @Delete('issue/:issueId')
+  public async delete(
+    @Param('issueId') issueId: string,
+    @Res() response: Response,
+  ): Promise<void> {
+    await this.issueService.removeIssue(issueId);
+
+    response.status(HttpStatus.OK).send();
   }
 
   private toDto(issue: Issue): IssueDTO {

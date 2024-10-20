@@ -16,4 +16,8 @@ export class IssueService {
 
     return await this.issueRepository.save(issue);
   }
+
+  public async removeIssue(issueId: string): Promise<void> {
+    await this.issueRepository.deleteById(issueId);
+  }
 }

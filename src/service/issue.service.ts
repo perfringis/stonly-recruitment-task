@@ -17,6 +17,10 @@ export class IssueService {
     return await this.issueRepository.save(issue);
   }
 
+  public async getIssues(): Promise<Issue[]> {
+    return await this.issueRepository.find({});
+  }
+
   public async updateIssue(issueId: string, state: IssueState): Promise<Issue> {
     const issue: Issue = await this.issueRepository.findById(issueId);
 

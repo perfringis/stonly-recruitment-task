@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpStatus,
   Param,
   Post,
@@ -20,6 +21,13 @@ import { IssueService } from 'src/service/issue.service';
 @Controller()
 export class IssueController {
   constructor(private readonly issueService: IssueService) {}
+
+  @Get('issue')
+  public async getAll(): Promise<IssueDTO[]> {
+    const issues: Issue[] = await this.issueService.getIssues();
+
+    return this.toDtoList(issues);
+  }
 
   @Post('issue')
   @UsePipes(ValidationPipe)
@@ -55,5 +63,9 @@ export class IssueController {
 
   private toDto(issue: Issue): IssueDTO {
     return new IssueDTO(issue);
+  }
+
+  private toDtoList(issues: Issue[]): IssueDTO[] {
+    return issues.map((issue: Issue) => new IssueDTO(issue));
   }
 }

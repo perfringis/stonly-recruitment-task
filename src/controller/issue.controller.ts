@@ -26,7 +26,7 @@ export class IssueController {
   public async create(
     @Body() createIssueDTO: CreateIssueDTO,
   ): Promise<IssueDTO> {
-    const issue: Issue = await this.issueService.create(createIssueDTO);
+    const issue: Issue = await this.issueService.createIssue(createIssueDTO);
 
     return this.toDto(issue);
   }

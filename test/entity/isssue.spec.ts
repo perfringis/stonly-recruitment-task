@@ -1,7 +1,7 @@
 import { NotAcceptableException } from '@nestjs/common';
 import { Issue, IssueState } from 'src/entity/Issue';
 
-describe('Issue', () => {
+describe('Issue unit test', () => {
   test('should not change issue ticket to open while ticket is pending', () => {
     // given
     const issue: Issue = new Issue(

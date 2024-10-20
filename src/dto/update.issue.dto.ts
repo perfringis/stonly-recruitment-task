@@ -8,4 +8,9 @@ export class UpdateIssueDTO {
   @IsNotEmpty()
   @IsEnum(IssueState)
   public state: IssueState;
+
+  constructor(id: string, state: IssueState) {
+    this.id = id;
+    this.state = state;
+  }
 }

@@ -7,7 +7,7 @@ import { IssueRepository } from 'src/repository/issue.repository';
 export class IssueService {
   constructor(private readonly issueRepository: IssueRepository) {}
 
-  public async create(issueDTO: CreateIssueDTO): Promise<Issue> {
+  public async createIssue(issueDTO: CreateIssueDTO): Promise<Issue> {
     const issue: Issue = new Issue(
       issueDTO.title,
       issueDTO.description,

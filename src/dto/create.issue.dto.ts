@@ -13,4 +13,10 @@ export class CreateIssueDTO {
   @IsNotEmpty()
   @IsEnum(IssueState)
   state: IssueState;
+
+  constructor(title: string, description: string, state: IssueState) {
+    this.title = title;
+    this.description = description;
+    this.state = state;
+  }
 }
